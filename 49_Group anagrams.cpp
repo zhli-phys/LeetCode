@@ -15,3 +15,33 @@ public:
         return sol;
     }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        vector<vector<string>> ans;
+        unordered_map<string, int> pos;
+        for (auto&& str : strs) {
+            string s = str;
+            sort(s.begin(), s.end());
+            if (pos.find(s) == pos.end()) {
+                pos[s] = ans.size();
+                ans.push_back({ str });
+            }
+            else
+                ans[pos[s]].push_back(str);
+        }
+        return ans;
+    }
+};
