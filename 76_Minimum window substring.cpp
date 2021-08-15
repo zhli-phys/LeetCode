@@ -1,3 +1,63 @@
+//12 ms 76%; 7.8 Mb 66%
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        vector<int> target(52);
+        for (char ch : t) 
+            ++target[pos(ch)];
+        vector<int> curr(52);
+        int minLen = INT_MAX;
+        int minLeft = 0;
+        int left = 0;
+        int m = s.size();
+        for (int right = 0; right < m; ++right) {
+            ++curr[pos(s[right])];
+            int included = true;
+            for (int i = 0; i < 52; ++i) {
+                if (curr[i] < target[i]) {
+                    included = false;
+                    break;
+                }
+            }
+            if (included) {
+                while (left <= right) {
+                    int leftPos = pos(s[left]);
+                    --curr[leftPos];
+                    if (curr[leftPos] < target[leftPos]) {
+                        if (right - left + 1 < minLen) {
+                            minLen = right - left + 1;
+                            minLeft = left;
+                        }
+                        ++left;
+                        break;
+                    }
+                    ++left;
+                }
+            }
+        }
+        if (minLen == INT_MAX)
+            return "";
+        else
+            return s.substr(minLeft, minLen);
+    }
+    
+    inline int pos(char ch) {
+        if (ch >= 'A' && ch <= 'Z')
+            return ch - 'A' + 26;
+        else
+            return ch - 'a';
+    }
+};
+
+
+
+
+
+
+
+
+
+//144 ms 10%; 9.2 MB 24%
 class Solution {
 public:
     string minWindow(string s, string t) {
