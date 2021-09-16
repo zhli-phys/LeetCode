@@ -1,6 +1,44 @@
 class Solution {
 public:
     vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        vector<int> ans;
+        int i = 0;
+        int j = 0;
+        int m = matrix.size();
+        int n = matrix[0].size();
+        vector<vector<bool>> visited(m, vector<bool>(n));
+        vector<vector<int>> dir{{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        int currDir = 0;
+        while (ans.size() < m * n) {
+            ans.push_back(matrix[i][j]);
+            visited[i][j] = true;
+            if (!isValid(i + dir[currDir][0], j + dir[currDir][1], visited))
+                currDir = (currDir + 1) % 4;
+            i += dir[currDir][0];
+            j += dir[currDir][1];
+        }
+        return ans;
+    }
+    
+    inline bool isValid(int i, int j, vector<vector<bool>>& visited) {
+        int m = visited.size();
+        int n = visited[0].size();
+        return i >= 0 && i < m && j >= 0 && j < n && !visited[i][j];
+    }
+};
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
         vector<int> ans(0);
         if (matrix.empty() || matrix[0].empty())
             return ans;
