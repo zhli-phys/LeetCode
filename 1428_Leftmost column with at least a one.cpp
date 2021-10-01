@@ -1,6 +1,38 @@
 class Solution {
 public:
     int leftMostColumnWithOne(BinaryMatrix &binaryMatrix) {
+        int m = binaryMatrix.dimensions()[0];
+        int n = binaryMatrix.dimensions()[1];
+        int ans = n;
+        for (int row = 0; row < m; ++row) {
+            if (ans == 0)
+                return 0;
+            if (binaryMatrix.get(row, ans - 1) == 0)
+                continue;
+            int start = 0;
+            int end = ans;
+            while (start < end) {
+                int mid = (start + end - 1) / 2;
+                if (binaryMatrix.get(row, mid) == 1)
+                    end = mid;
+                else 
+                    start = mid + 1;
+            }
+            ans = start;
+        }
+        return ans == n ? -1 : ans;
+    }
+};
+
+
+
+
+
+
+
+class Solution {
+public:
+    int leftMostColumnWithOne(BinaryMatrix &binaryMatrix) {
         int n = binaryMatrix.dimensions()[1];
         int ans = helper(0, n, binaryMatrix);
         if (ans == n)
