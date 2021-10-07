@@ -1,5 +1,48 @@
 class Solution {
 public:
+    int dirs[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    
+    bool exist(vector<vector<char>>& board, string word) {
+        int m = board.size();
+        int n = board[0].size();
+        vector<vector<bool>> visited(m, vector<bool>(n));
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (board[i][j] == word[0]) {                    
+                    if (dfs(i, j, board, 0, word, visited))
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    bool dfs(int i, int j, vector<vector<char>>& board, int k, string& word, vector<vector<bool>>& visited) {
+        if (i < 0 || i >= visited.size() || j < 0 || j >= visited[0].size() || visited[i][j] || board[i][j] != word[k])
+            return false;
+        if (k == word.size() - 1)
+            return true;
+        ++k;
+        visited[i][j] = true;
+        for (auto dir : dirs) {
+            if (dfs(i + dir[0], j + dir[1], board, k, word, visited))
+                return true;
+        }
+        visited[i][j] = false;
+        return false;
+    }
+};
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
     bool exist(vector<vector<char>>& board, string word) {
         int len = word.size();
         int m = board.size();
