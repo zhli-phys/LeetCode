@@ -1,3 +1,74 @@
+struct TrieNode {
+    bool presence;
+    TrieNode* children[26];
+    TrieNode(bool presence = false) : presence(presence) {
+        for (auto& child : children)
+            child = nullptr;
+    }
+};
+
+class Trie {
+public:
+    Trie() {
+        root = new TrieNode();
+    }
+    
+    ~Trie() {
+        erase(root);
+    }
+    
+    void erase(TrieNode* root) {
+        if (!root)
+            return;
+        for (auto next : root->children)
+            erase(next);
+        delete root;
+    }
+    
+    void insert(string word) {
+        auto curr = root;
+        for (char ch : word) {
+            if (!curr->children[ch-'a'])
+                curr->children[ch-'a'] = new TrieNode();
+            curr = curr->children[ch-'a'];
+        }
+        curr->presence = true;
+    }
+    
+    bool search(string word) {
+        auto curr = root;
+        for (char ch : word) {
+            if (!curr->children[ch-'a'])
+                return false;
+            curr = curr->children[ch-'a'];
+        }
+        return curr->presence;
+    }
+    
+    bool startsWith(string prefix) {
+        auto curr = root;
+        for (char ch : prefix) {
+            if (!curr->children[ch-'a'])
+                return false;
+            curr = curr->children[ch-'a'];
+        }
+        return true;
+    }
+
+private:
+    TrieNode* root;
+};
+
+
+
+
+
+
+
+
+
+
+
 struct node {
         bool contained;
         node* next[26];
