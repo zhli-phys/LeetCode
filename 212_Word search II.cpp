@@ -1,3 +1,51 @@
+class Solution {
+public:
+    int dir[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    
+    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+        unordered_set<string> wordset;
+        for (auto& word : words)
+            wordset.insert(word);
+        int m = board.size();
+        int n = board[0].size();
+        vector<vector<bool>> visited(m, vector<bool>(n));
+        string curr;
+        vector<string> ans;
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                dfs(i, j, curr, board, wordset, visited, ans);
+            }
+        }
+        return ans;
+    }
+    
+    void dfs(int i, int j, string& curr, vector<vector<char>>& board, unordered_set<string>& wordset,
+             vector<vector<bool>>& visited, vector<string>& ans) {
+        int m = board.size();
+        int n = board[0].size();
+        if (curr.size() >= 10 || i < 0 || i >= m || j < 0 || j >= n || visited[i][j])
+            return;
+        curr.push_back(board[i][j]);
+        visited[i][j] = true;
+        if (wordset.find(curr) != wordset.end()) {
+            ans.push_back(curr);
+            wordset.erase(curr);
+        }
+        for (int k = 0; k < 4; ++k)
+            dfs(i + dir[k][0], j + dir[k][1], curr, board, wordset, visited, ans);
+        visited[i][j] = false;
+        curr.pop_back();
+    }
+};
+
+
+
+
+
+
+
+
+
 //Time limit exceeded
 class Solution {
 public:
