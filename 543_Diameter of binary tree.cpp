@@ -1,6 +1,35 @@
 class Solution {
 public:
     int diameterOfBinaryTree(TreeNode* root) {
+        int ans = 0;
+        height(root, ans);
+        return ans;
+    }
+    
+    int height(TreeNode* root, int &ans) {
+        if (!root)
+            return 0;
+        int leftHeight = height(root->left, ans);
+        int rightHeight = height(root->right, ans);
+        ans = max(ans, leftHeight + rightHeight);
+        return max(leftHeight, rightHeight) + 1;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    int diameterOfBinaryTree(TreeNode* root) {
         unordered_map<TreeNode*, int> lfr;
         return largestlength(root, lfr);
     }

@@ -1,3 +1,32 @@
+class Solution {
+public:
+    int rangeBitwiseAnd(int left, int right) {
+        int ans = 0;
+        for (int i = 31; i >= 0; --i) {
+            if ((left & (1 << i)) != 0) {
+                if ((right & (1 << i)) != 0) 
+                    return (1 << i) + rangeBitwiseAnd(left - (1 << i), right - (1 << i));
+                else
+                    return 0;
+            }
+            else if ((right & (1 << i)) != 0)
+                return 0;
+        }
+        return 0;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
 //20 ms 17%; 9.1 MB 5%
 class Solution {
 public:
