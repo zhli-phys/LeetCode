@@ -1,5 +1,42 @@
 class Solution {
 public:
+    int pathSum(TreeNode* root, int targetSum) {
+        int ans = 0;
+        unordered_map<int, int> path;
+        path[0] = 1;
+        dfs(root, path, 0, targetSum, ans);
+        return ans;
+    }
+    
+    void dfs(TreeNode* root, unordered_map<int, int>& path, int currSum, int targetSum, int& ans) {
+        if (!root)
+            return;
+        currSum += root->val;
+        if (path.find(currSum - targetSum) != path.end())
+            ans += path[currSum - targetSum];
+        ++path[currSum];
+        dfs(root->left, path, currSum, targetSum, ans);
+        dfs(root->right, path, currSum, targetSum, ans);
+        --path[currSum];
+        if (path[currSum] == 0)
+            path.erase(currSum);
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
     int pathSum(TreeNode* root, int sum) {
         unordered_map<TreeNode*, unordered_map<int, int>> paths;
         return pathSum(root, sum, paths);
