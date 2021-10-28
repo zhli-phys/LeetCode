@@ -1,6 +1,48 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
+        unordered_map<int, unordered_map<int, unordered_set<int>>> tri;
+        sort(nums.begin(), nums.end());
+        int n = nums.size();
+        for (int i = 0; i < n; ++i) {
+            if (i == 0 || nums[i] != nums[i-1]) {
+                int j = i + 1;
+                int k = n - 1;
+                while (j < k) {
+                    int curr = nums[i] + nums[j] + nums[k];
+                    if (curr > 0) 
+                        --k;
+                    else if (curr < 0)
+                        ++j;
+                    else {
+                        tri[nums[i]][nums[j]].insert(nums[k]);
+                        ++j;
+                        --k;
+                    }
+                }
+            }
+        }
+        vector<vector<int>> ans;
+        for (auto it = tri.begin(); it != tri.end(); ++it) 
+            for (auto it1 = it->second.begin(); it1 != it->second.end(); ++it1) 
+                for (auto it2 = it1->second.begin(); it2 != it1->second.end(); ++it2)
+                    ans.push_back({it->first, it1->first, *it2});
+        return ans;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
         vector<vector<int>> results;
         unordered_set<int> distinct_nums;
         unordered_set<int> double_nums;
