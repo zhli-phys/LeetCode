@@ -24,8 +24,7 @@ public:
             output.num = leftBST.num + rightBST.num + 1;
             ans = max(ans, output.num);
             output.lowerBound = min(leftBST.lowerBound, root->val);
-            output.upperBound = max(rightBST.upperBound, root->val);
-            
+            output.upperBound = max(rightBST.upperBound, root->val);            
         }
         return output;
     }
