@@ -1,6 +1,67 @@
 class Solution {
 public:
     string decodeString(string s) {
+        return decode(0, s.size() - 1, s);
+    }
+    
+    string decode(int start, int end, const string& s) {
+        string ans;
+        if (start >= s.size() || start > end)
+            return ans;
+        int i = start;
+        while (i <= end) {
+            if (s[i] >= 'a' && s[i] <= 'z') {
+                ans.push_back(s[i]);
+                ++i;
+            }
+            else {
+                int count = 0;
+                while (s[i] >= '0' && s[i] <= '9') {
+                    count = count * 10 + s[i] - '0';
+                    ++i;
+                }
+                int bracket = 1;
+                int newStart = i + 1;
+                int newEnd = newStart;
+                while (bracket > 0) {
+                    if (s[newEnd] == '[')
+                        ++bracket;
+                    else if (s[newEnd] == ']')
+                        --bracket;
+                    ++newEnd;
+                }
+                for (int j = 0; j < count; ++j)
+                    ans += decode(newStart, newEnd - 2, s);
+                i = newEnd;
+            }
+        }
+        return ans;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    string decodeString(string s) {
         string ans = "";
         stack<int> nums;
         stack<string> strs;
