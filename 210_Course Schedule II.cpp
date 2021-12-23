@@ -1,6 +1,53 @@
 class Solution {
 public:
     vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<unordered_set<int>> outgoing(numCourses);
+        vector<unordered_set<int>> ingoing(numCourses);
+        for (auto& prerequisite : prerequisites) {
+            outgoing[prerequisite[1]].insert(prerequisite[0]);
+            ingoing[prerequisite[0]].insert(prerequisite[1]);
+        }
+        vector<int> ans;
+        queue<int> q;
+        for (int i = 0; i < numCourses; ++i)
+            if (ingoing[i].empty())
+                q.push(i);
+        while (!q.empty()) {
+            int curr = q.front();
+            q.pop();
+            ans.push_back(curr);
+            for (int next : outgoing[curr]) {
+                ingoing[next].erase(curr);
+                if (ingoing[next].empty())
+                    q.push(next);
+            }
+        }
+        if (ans.size() < numCourses)
+            return {};
+        return ans;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
         vector<unordered_set<int>> before(numCourses);
         vector<unordered_set<int>> after(numCourses);
         int n = prerequisites.size();
