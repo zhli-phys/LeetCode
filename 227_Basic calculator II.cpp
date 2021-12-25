@@ -3,8 +3,8 @@ public:
     int calculate(string s) {
         int n = s.size();
         int i = 0;
-        long long ans = 0;
-        long long curr = 0;
+        int ans = 0;
+        int curr = 0;
         char op = 0;
         while (i < n) {
             if (s[i] == ' ')
@@ -12,7 +12,7 @@ public:
             else if (s[i] >= '0' && s[i] <= '9') {
                 long long num = 0;
                 while (s[i] >= '0' && s[i] <= '9') {
-                    num = 10 * num + s[i] - '0';
+                    num = 10 * num + (s[i] - '0');
                     ++i;
                 }
                 if (op == 0) {
