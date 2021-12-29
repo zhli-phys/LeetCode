@@ -1,20 +1,51 @@
-/*
-// Definition for a Node.
-class Node {
+class Solution {
 public:
-    int val;
-    Node* left;
-    Node* right;
-    Node* next;
-
-    Node() : val(0), left(NULL), right(NULL), next(NULL) {}
-
-    Node(int _val) : val(_val), left(NULL), right(NULL), next(NULL) {}
-
-    Node(int _val, Node* _left, Node* _right, Node* _next)
-        : val(_val), left(_left), right(_right), next(_next) {}
+    Node* connect(Node* root) {
+        Node* prevHead = root;
+        while (prevHead) {
+            Node* prevCurr = prevHead;
+            Node* head = nullptr;
+            Node* curr = nullptr;
+            while (prevCurr) {
+                if (prevCurr->left) {
+                    if (!head) {
+                        head = prevCurr->left;
+                        curr = head;
+                    }                    
+                    else {
+                        curr->next = prevCurr->left;
+                        curr = curr->next;
+                    }
+                }
+                if (prevCurr->right) {
+                    if (!head) {
+                        head = prevCurr->right;
+                        curr = head;
+                    }
+                    else {
+                        curr->next = prevCurr->right;
+                        curr = curr->next;
+                    }
+                }
+                prevCurr = prevCurr->next;
+            }    
+            prevHead = head;
+        }
+        return root;
+    }
 };
-*/
+
+
+
+
+
+
+
+
+
+
+
+
 
 class Solution {
 public:
