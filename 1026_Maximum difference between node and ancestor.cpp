@@ -1,6 +1,35 @@
 class Solution {
 public:
     int maxAncestorDiff(TreeNode* root) {
+        return max(diff(root->left, root->val, root->val), diff(root->right, root->val, root->val));
+    }
+    
+    int diff(TreeNode* curr, int maxNum, int minNum) {
+        if (!curr)
+            return 0;
+        int ans = max(abs(maxNum - curr->val), abs(minNum - curr->val));
+        maxNum = max(maxNum, curr->val);
+        minNum = min(minNum, curr->val);
+        ans = max(ans, diff(curr->left, maxNum, minNum));
+        ans = max(ans, diff(curr->right, maxNum, minNum));
+        return ans;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    int maxAncestorDiff(TreeNode* root) {
         unordered_map<TreeNode*, int> smallest;
         unordered_map<TreeNode*, int> largest;
         return helper(root, smallest, largest);
