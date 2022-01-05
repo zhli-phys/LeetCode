@@ -1,6 +1,55 @@
 class Solution {
 public:
     vector<vector<string>> partition(string s) {
+        vector<vector<string>> ans;
+        vector<string> curr;
+        dfs(0, s, curr, ans);
+        return ans;
+    }
+    
+    void dfs(int i, const string& s, vector<string>& curr, vector<vector<string>>& ans) {
+        if (i == s.size()) {
+            ans.push_back(curr);
+            return;
+        }            
+        for (int j = 1; j <= s.size() - i; ++j) {
+            string str = s.substr(i, j);
+            if (isPalindrome(str)) {
+                curr.push_back(str);
+                dfs(i + j, s, curr, ans);
+                curr.pop_back();
+            }
+        }
+    }
+    
+    bool isPalindrome(const string& str) {
+        int i = 0;
+        int j = str.size() - 1;
+        while (i < j) {
+            if (str[i] != str[j])
+                return false;
+            ++i;
+            --j;
+        }
+        return true;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    vector<vector<string>> partition(string s) {
         int n = s.size();
         vector<vector<int>> palin(n);
         for (int i = 0; i < n; i++) {
