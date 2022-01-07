@@ -3,6 +3,43 @@ public:
     vector<vector<char>> rotateTheBox(vector<vector<char>>& box) {
         int m = box.size();
         int n = box[0].size();
+        vector<vector<char>> ans(n, vector<char>(m, '.'));
+        for (int i = 0; i < m; ++i) {
+            int writer = n - 1;
+            for (int j = n - 1; j >= 0; --j) {
+                if (box[i][j] == '*') {
+                    ans[j][m-1-i] = '*';
+                    writer = j - 1;
+                }
+                else if (box[i][j] == '#') {
+                    ans[writer][m-1-i] = '#';
+                    --writer;
+                }
+            }
+        }
+        return ans;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    vector<vector<char>> rotateTheBox(vector<vector<char>>& box) {
+        int m = box.size();
+        int n = box[0].size();
         vector<vector<int>> count(m, vector<int>(n + 1, -1));
         for (int i = 0; i < m; ++i) {
             int curr = 0;
