@@ -14,3 +14,41 @@ public:
 private:
     vector<int> vec;
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    Solution(ListNode* head) : head(head) {
+
+    }
+    
+    int getRandom() {
+        auto curr = head;
+        int ans = curr->val;
+        int n = 1;
+        while (curr->next) {
+            ++n;
+            if (rand() % n == 0)
+                ans = curr->next->val;
+            curr = curr->next;
+        }
+        return ans;
+    }
+    
+private:
+    ListNode* head;
+};
