@@ -32,3 +32,53 @@ public:
             return ans;
     }
 };
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    int myAtoi(string s) {
+        long long ans = 0;
+        bool negative = false;
+        bool met = false;
+        int n = s.size();
+        for (int i = 0; i < n; ++i) {
+            if (s[i] >= '0' && s[i] <= '9') {
+                met = true;
+                if (!negative) {
+                    ans = 10 * ans + (s[i] - '0');
+                    if (ans > INT_MAX)
+                        return INT_MAX;
+                }
+                else {
+                    ans = 10 * ans - (s[i] - '0');
+                    if (ans < INT_MIN)
+                        return INT_MIN;
+                }
+            }
+            else if (!met) {
+                if (s[i] == ' ')
+                    continue;
+                else if (s[i] == '-') {
+                    negative = true; 
+                    met = true;
+                }
+                else if (s[i] == '+')
+                    met = true;
+                else
+                    return 0;
+            }
+            else
+                break;
+        }
+        return ans;
+    }
+};
