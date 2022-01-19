@@ -1,6 +1,30 @@
 class Solution {
 public:
     int minSteps(int n) {
+        int ans = 0;
+        for (int i = 2; i <= n; ++i) {
+            while (n % i == 0) {
+                ans += i;
+                n /= i;
+            }
+            if (n == 1)
+                break;
+        }
+        return ans;
+    }
+};
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    int minSteps(int n) {
         vector<vector<int>> dp(n, vector<int>(n, -2));
         return steps(1, 0, dp, n);
     }
