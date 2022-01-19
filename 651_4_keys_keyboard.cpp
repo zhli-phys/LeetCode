@@ -1,6 +1,27 @@
 class Solution {
 public:
     int maxA(int n) {
+        int dp[n+1];
+        for (int i = 0; i <= n; ++i) {
+            dp[i] = i;
+            for (int j = 3; j < i; ++j) 
+                dp[i] = max(dp[i], dp[i-j] * (j-1));
+        }
+        return dp[n];
+    }
+};
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    int maxA(int n) {
         if (n <= 3)
             return n;
         int dp[n];
