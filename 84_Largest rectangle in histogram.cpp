@@ -1,6 +1,66 @@
 class Solution {
 public:
     int largestRectangleArea(vector<int>& heights) {
+        int n = heights.size();
+        return helper(0, n - 1, heights);
+    }
+    
+    int helper(int i, int j, vector<int>& heights) {
+        if (i > j)
+            return 0;
+        else if (i == j)
+            return heights[i];
+        int mid = (i + j) / 2;
+        int ans = max(helper(i, mid - 1, heights), helper(mid + 1, j, heights));
+        int left = mid - 1;
+        int right = mid + 1;
+        int currHeight = heights[mid];
+        int curr = currHeight;
+        ans = max(ans, curr);
+        while (left >= i || right <= j) {
+            if (left < i) {
+                currHeight = min(currHeight, heights[right]);
+                curr = currHeight * (right - left);
+                ++right;
+            }
+            else if (right > j) {
+                currHeight = min(currHeight, heights[left]);
+                curr = currHeight * (right - left);
+                --left;
+            }
+            else {
+                if (heights[left] >= heights[right]) {
+                    currHeight = min(currHeight, heights[left]);
+                    curr = currHeight * (right - left);
+                    --left;
+                }
+                else {
+                    currHeight = min(currHeight, heights[right]);
+                    curr = currHeight * (right - left);
+                    ++right;
+                }
+            }
+            ans = max(ans, curr);
+        }
+        return ans;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
         if (heights.empty())
             return 0;
         return largestRectangleArea(heights, 0, heights.size());
