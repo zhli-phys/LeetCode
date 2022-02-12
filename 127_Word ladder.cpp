@@ -1,6 +1,64 @@
 class Solution {
 public:
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        int m = beginWord.size();
+        vector<unordered_map<string, vector<string>>> mps(m);
+        int n = wordList.size();
+        for (int i = 0; i < m; ++i) 
+            for (auto& word : wordList) 
+                mps[i][word.substr(0, i) + word.substr(i+1)].push_back(word);
+        int step = 1;
+        queue<string> q;
+        q.push(beginWord);
+        unordered_set<string> seen;
+        seen.insert(beginWord);
+        while (!q.empty()) {
+            ++step;
+            int len = q.size();
+            for (int i = 0; i < len; ++i) {
+                auto& curr = q.front();
+                // cout << curr << '\t';
+                for (int j = 0; j < m; ++j) {
+                    string seg = curr.substr(0, j) + curr.substr(j+1);
+                    if (mps[j].find(seg) == mps[j].end())
+                        continue;
+                    for (auto& s : mps[j][seg]) {
+                        if (s == endWord)
+                            return step;
+                        if (seen.find(s) == seen.end()) {
+                            q.push(s);
+                            seen.insert(s);
+                        }
+                    }
+                }
+                q.pop();
+            }
+            // cout << step << endl;
+        }
+        return 0;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
         int n = wordList.size();
         int pos = -1;
         for (int i = 0; i < n; i++) {
