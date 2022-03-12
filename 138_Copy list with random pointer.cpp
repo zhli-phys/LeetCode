@@ -2,6 +2,47 @@ class Solution {
 public:
     Node* copyRandomList(Node* head) {
         if (!head)
+            return nullptr;
+        unordered_map<Node*, Node*> mp;
+        mp[nullptr] = nullptr;
+        auto newHead = new Node(head->val);
+        auto curr = head;
+        auto newCurr = newHead;
+        mp[curr] = newCurr;
+        while (curr->next) {
+            newCurr->next = new Node(curr->next->val);
+            curr = curr->next;
+            newCurr = newCurr->next;
+            mp[curr] = newCurr;
+        }
+        curr = head;
+        newCurr = newHead;
+        while (curr) {
+            newCurr->random = mp[curr->random];
+            curr = curr->next;
+            newCurr = newCurr->next;
+        }
+        return newHead;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    Node* copyRandomList(Node* head) {
+        if (!head)
             return NULL;
         vector<Node*> original_nodes;
         unordered_map<Node*, int> node_indices;
