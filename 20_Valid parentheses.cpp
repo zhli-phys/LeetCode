@@ -1,6 +1,48 @@
 class Solution {
 public:
     bool isValid(string s) {
+        stack<char> sk;
+        for (char ch : s) {
+            if (ch == '(' || ch == '[' || ch == '{')
+                sk.push(ch);
+            else if (ch == ')') {
+                if (sk.empty() || sk.top() != '(')
+                    return false;
+                else
+                    sk.pop();
+            }
+            else if (ch == ']') {
+                if (sk.empty() || sk.top() != '[')
+                    return false;
+                else
+                    sk.pop();
+            }
+            else if (ch == '}') {
+                if (sk.empty() || sk.top() != '{')
+                    return false;
+                else
+                    sk.pop();
+            }
+        }
+        return sk.empty();
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    bool isValid(string s) {
         stack<char> current;
         unordered_map<char, char> par_map;
         par_map.insert(pair<char, char>(')', '('));
