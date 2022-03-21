@@ -1,5 +1,37 @@
 class Solution {
 public:
+    vector<int> partitionLabels(string s) {
+        vector<int> pos(26, -1);
+        int n = s.size();
+        for (int i = 0; i < n; ++i)
+            pos[s[i]-'a'] = i;
+        vector<int> ans;
+        int prev = -1;
+        int end = 0;
+        for (int i = 0; i < n; ++i) {
+            end = max(end, pos[s[i]-'a']);
+            if (i == end) {
+                ans.push_back(end - prev);
+                prev = end;
+            }
+        }
+        return ans;
+    }
+};\
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
     vector<int> partitionLabels(string S) {
         vector<int> ans;
         vector<pair<int, int>> pos(26, pair<int, int>(-1, -1));
