@@ -1,5 +1,43 @@
 class Solution {
 public:
+    void gameOfLife(vector<vector<int>>& board) {
+        int m = board.size();
+        int n = board[0].size();
+        auto copy = board;
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                int nb = get(i-1, j-1, copy) + get(i-1, j, copy) + get(i-1, j+1, copy) 
+                    + get(i, j-1, copy) + get(i, j+1, copy) + get(i+1, j-1, copy)
+                    + get(i+1, j, copy) + get(i+1, j+1, copy);
+                if (nb < 2 || nb > 3)
+                    board[i][j] = 0;
+                else if (nb == 3)
+                    board[i][j] = 1;
+            }
+        }
+    }
+    
+    int get(int i, int j, vector<vector<int>>& copy) {
+        if (i < 0 || i >= copy.size() || j < 0 || j >= copy[0].size())
+            return 0;
+        else
+            return copy[i][j];
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
     int live(int i, int j, vector<vector<int>>& board) {
         int m = board.size();
         int n = board[0].size();
@@ -32,6 +70,19 @@ public:
         }
     }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //In-place modification
 class Solution {
